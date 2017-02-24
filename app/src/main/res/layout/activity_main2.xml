@@ -16,24 +16,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/button"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/button2"
-        android:onClick="newUser" />
-
-    <Button
-        android:text="New admin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:id="@+id/button2"
-        android:onClick="newAdmin" />
+        android:onClick="newUser" />
 
     <TextView
         android:text="Already registered? Sign in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button2"
+        android:layout_below="@+id/button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:id="@+id/textView"

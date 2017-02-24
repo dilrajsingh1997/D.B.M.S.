@@ -20,11 +20,6 @@ public class Main2Activity extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void newAdmin(View view){
-        Intent i = new Intent(this, Main4Activity.class);
-        startActivity(i);
-    }
-
     public void signIn(View view){
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
