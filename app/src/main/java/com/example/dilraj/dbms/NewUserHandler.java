@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class NewUserHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 10;
+    private static final int DATABASE_VERSION = 11;
     private static final String DATABASE_NAME = "libDB.db";
     private static final String COLUMN_ID = "_id";
 
@@ -27,9 +27,6 @@ public class NewUserHandler extends SQLiteOpenHelper {
     private static final String COLUMN_PSSWD= "passwd";
 
     private static final String TABLE_ADMINS = "admins";
-    private static final String COLUMN_ADMIN_NAME = "admin_name";
-    private static final String COLUMN_ADMIN_DESIGNATION = "admin_desig";
-    private static final String COLUMN_ADMIN_PHONE = "admin_phone";
     private static final String COLUMN_ADMIN_UID = "admin_uid";
     private static final String COLUMN_ADMIN_PSSWD = "admin_psswd";
 
@@ -59,13 +56,13 @@ public class NewUserHandler extends SQLiteOpenHelper {
                 ");";
         db.execSQL(q);
         q = "CREATE TABLE IF NOT EXISTS " + TABLE_ADMINS + "(" +
-                COLUMN_ID + " INTEGER AUTO INCREMENT, " +
-                COLUMN_ADMIN_NAME + " VARCHAR(200), " +
-                COLUMN_ADMIN_DESIGNATION + " VARCHAR(20), " +
-                COLUMN_ADMIN_PHONE + " INTEGER, " +
+                //COLUMN_ID + " INTEGER AUTO INCREMENT, " +
                 COLUMN_ADMIN_UID + " VARCHAR(20) PRIMARY KEY, " +
                 COLUMN_ADMIN_PSSWD + " VARCHAR(200)" +
                 ");";
+        db.execSQL(q);
+        q = "INSERT INTO " + TABLE_ADMINS + " VALUES (" +
+                "\"78912\", \"admin\" )";
         db.execSQL(q);
         q = "CREATE TABLE IF NOT EXISTS " + TABLE_BOOKS + "(" +
                 COLUMN_ID + " INTEGER AUTO INCREMENT, " +
@@ -89,11 +86,6 @@ public class NewUserHandler extends SQLiteOpenHelper {
                 COLUMN_BOOK_ID + ")" +
                 ");";
         db.execSQL(q);
-        q = "CREATE TABLE IF NOT EXISTS " + TABLE_IDS + "(" +
-                COLUMN_ID + " INTEGER AUTO INCREMENT, " +
-                COLUMN_ID_IN + " VARCHAR(200) PRIMARY KEY" +
-                ");";
-
     }
 
     public NewUserHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -186,36 +178,6 @@ public class NewUserHandler extends SQLiteOpenHelper {
     public boolean authUser(String roll, String pass){
         SQLiteDatabase db = getReadableDatabase();
         String q = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_ROLL + " = \"" + roll + "\" AND " + COLUMN_PSSWD + " = \"" + pass + "\"";
-        Cursor c = db.rawQuery(q, null);
-        c.moveToFirst();
-        if(c.getCount()>0){
-            c.close();
-            return true;
-        }
-        c.close();
-        return false;
-    }
-
-    public void addAdminDB(Admins a)throws SQLiteConstraintException, SQLiteAbortException, SQLIntegrityConstraintViolationException{
-        try{
-            ContentValues values = new ContentValues();
-            values.put(COLUMN_ADMIN_NAME, a.getName());
-            values.put(COLUMN_ADMIN_DESIGNATION, a.getDesig());
-            values.put(COLUMN_ADMIN_PHONE, a.getPhone());
-            values.put(COLUMN_ADMIN_UID, a.getUid());
-            values.put(COLUMN_ADMIN_PSSWD, a.getPsswd());
-            SQLiteDatabase db = getWritableDatabase();
-            db.insert(TABLE_ADMINS, null, values);
-            db.close();
-        }
-        catch (SQLiteConstraintException e){
-            throw new SQLIntegrityConstraintViolationException(e.toString());
-        }
-    }
-
-    public boolean checkAdmin(String uid){
-        SQLiteDatabase db = getReadableDatabase();
-        String q = "SELECT * FROM " + TABLE_ADMINS + " WHERE " + COLUMN_ADMIN_UID + " = \"" + uid + "\"";
         Cursor c = db.rawQuery(q, null);
         c.moveToFirst();
         if(c.getCount()>0){
