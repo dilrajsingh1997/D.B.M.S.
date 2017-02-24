@@ -40,9 +40,6 @@ public class NewUserHandler extends SQLiteOpenHelper {
     private static final String COLUMN_BOOKID = "book_id_rent";
     private static final String COLUMN_DATE = "date";
 
-    private static final String TABLE_IDS = "id_table";
-    private static final String COLUMN_ID_IN = "id";
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         String q = "CREATE TABLE IF NOT EXISTS " + TABLE_USERS + "(" +
@@ -221,32 +218,6 @@ public class NewUserHandler extends SQLiteOpenHelper {
         db.close();
         c.close();
         return ar;
-    }
-
-    public void addID(String id) throws SQLIntegrityConstraintViolationException{
-        try{
-            ContentValues values = new ContentValues();
-            values.put(COLUMN_ID_IN, id);
-            SQLiteDatabase db = getWritableDatabase();
-            db.insert(TABLE_IDS, null, values);
-            db.close();
-        }
-        catch (SQLiteConstraintException e){
-            throw new SQLIntegrityConstraintViolationException(e.toString());
-        }
-    }
-
-    public boolean checkIdIn(String id){
-        SQLiteDatabase db = getReadableDatabase();
-        String q = "SELECT * FROM " + TABLE_IDS + " WHERE " + COLUMN_ID_IN + " = \"" + id + "\"";
-        Cursor c = db.rawQuery(q, null);
-        c.moveToFirst();
-        if(c.getCount()>0){
-            c.close();
-            return true;
-        }
-        c.close();
-        return false;
     }
 
 }
