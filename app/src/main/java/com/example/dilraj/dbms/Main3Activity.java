@@ -1,18 +1,15 @@
 package com.example.dilraj.dbms;
 
-import android.content.DialogInterface;
-import android.database.sqlite.SQLiteConstraintException;
-import android.os.Environment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -23,7 +20,7 @@ public class Main3Activity extends AppCompatActivity {
     EditText e1, e2, e3, e4, e5, e6;
     String name, branch, roll, phone, address, psswd;
     NewUserHandler newUserHandler;
-    ListView ls;
+    RecyclerView ls;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +35,7 @@ public class Main3Activity extends AppCompatActivity {
         e4 = (EditText) findViewById(R.id.editText5);
         e5 = (EditText) findViewById(R.id.editText6);
         e6 = (EditText) findViewById(R.id.editText7);
-        ls = (ListView) findViewById(R.id.listView);
+        ls = (RecyclerView) findViewById(R.id.listView);
     }
 
     @Override
@@ -76,8 +73,10 @@ public class Main3Activity extends AppCompatActivity {
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
         ArrayList<USers> ar = newUserHandler.test2();
-        ArrayAdapter<USers> add = new ArrayAdapter<>(Main3Activity.this, android.R.layout.simple_list_item_1, ar);
-        ls.setAdapter(add);
+        UserAdapter adapter=new UserAdapter(this,ar);
+        ls.setAdapter(adapter);
+        LinearLayoutManager manager=new LinearLayoutManager(this);
+        ls.setLayoutManager(manager);
     }
 
 }
