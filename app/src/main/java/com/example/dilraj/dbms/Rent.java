@@ -5,7 +5,7 @@ package com.example.dilraj.dbms;
  */
 
 public class Rent {
-    private String userid,bookid,date;
+    private String userid, bookid, date;
 
     public Rent(String userid, String bookid, String date) {
         this.userid = userid;

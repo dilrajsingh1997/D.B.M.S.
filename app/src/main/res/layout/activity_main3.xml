@@ -97,6 +97,7 @@
         android:id="@+id/button4"
         android:text="Good to go"
         android:layout_marginTop="5dp"
+        android:background="@drawable/btn_bg"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/editText7"
         android:onClick="addUser"/>

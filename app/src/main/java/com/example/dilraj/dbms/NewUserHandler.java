@@ -1,5 +1,9 @@
 package com.example.dilraj.dbms;
 
+/**
+ * Created by DilrajSingh on 24-Feb-17.
+ */
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -108,9 +112,62 @@ public class NewUserHandler extends SQLiteOpenHelper {
             SQLiteDatabase db = getWritableDatabase();
             db.insert(TABLE_USERS, null, values);
             db.close();
-        } catch (SQLiteConstraintException e) {
-            throw new SQLIntegrityConstraintViolationException(e.toString());
         }
+        catch (SQLiteAbortException e){
+            throw new SQLiteAbortException(e.toString());
+        }
+        catch (SQLiteConstraintException e){
+            throw new SQLiteConstraintException(e.toString());
+        }
+    }
+
+    public void addBook(Books b) throws SQLIntegrityConstraintViolationException, SQLiteAbortException, SQLiteConstraintException{
+        try {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_BOOK_ID, b.getId());
+            values.put(COLUMN_BOOK_NAME, b.getName());
+            values.put(COLUMN_BOOK_AUTHORNAME, b.getAuthor());
+            SQLiteDatabase db = getWritableDatabase();
+            db.insert(TABLE_BOOKS, null, values);
+            db.close();
+        }
+        catch (SQLiteAbortException e){
+            throw new SQLiteAbortException(e.toString());
+        }
+        catch (SQLiteConstraintException e){
+            throw new SQLiteConstraintException(e.toString());
+        }
+    }
+
+    public void addRent(Rent r){
+        try {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_USERID, r.getUserid());
+            values.put(COLUMN_BOOKID, r.getUserid());
+            values.put(COLUMN_DATE, r.getDate());
+            SQLiteDatabase db = getWritableDatabase();
+            db.insert(TABLE_BOOKS, null, values);
+            db.close();
+        }
+        catch (SQLiteAbortException e){
+            throw new SQLiteAbortException(e.toString());
+        }
+        catch (SQLiteConstraintException e){
+            throw new SQLiteConstraintException(e.toString());
+        }
+    }
+
+    public boolean onRent(String id){
+        SQLiteDatabase db = getReadableDatabase();
+        String q = "SELECT * FROM " + TABLE_RENT + " WHERE " + COLUMN_BOOKID + " = \"" + id + "\"";
+        Cursor c = db.rawQuery(q, null);
+        c.moveToFirst();
+        if (c.getCount() > 0) {
+            c.close();
+            return false;
+        }
+        c.close();
+        return true;
     }
 
     public ArrayList<USers> getUsers() {

@@ -23,9 +23,7 @@ public class Main3Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
-        Toast.makeText(this, Environment.getRootDirectory().toString(), Toast.LENGTH_SHORT).show();
-        newUserHandler = new NewUserHandler(this, Environment.getRootDirectory().toString() + "storage/emulated/0/Download/", null, 1);
-        Toast.makeText(this, "created", Toast.LENGTH_SHORT).show();
+        newUserHandler = new NewUserHandler(this, null, null, 1);
         e1 = (EditText) findViewById(R.id.editText3);
         e2 = (EditText) findViewById(R.id.editText4);
         e3 = (EditText) findViewById(R.id.editText8);

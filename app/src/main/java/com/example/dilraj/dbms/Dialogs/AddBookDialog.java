@@ -1,5 +1,6 @@
 package com.example.dilraj.dbms.Dialogs;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -10,20 +11,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.dilraj.dbms.Books;
+import com.example.dilraj.dbms.Main5Activity;
+import com.example.dilraj.dbms.NewUserHandler;
 import com.example.dilraj.dbms.R;
+
+import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
  * Created by JatinThareja on 24-Feb-17.
  */
 
 public class AddBookDialog extends DialogFragment {
+
     EditText id,name,author;
     Button addbook_button;
+    NewUserHandler newUserHandler;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NO_FRAME,R.style.DialogTheme);
+        setStyle(DialogFragment.STYLE_NO_FRAME, R.style.DialogTheme);
+        newUserHandler = new NewUserHandler(getContext(), null, null, 1);
     }
 
     @Nullable
@@ -41,10 +50,20 @@ public class AddBookDialog extends DialogFragment {
         addbook_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Add Code to insert book", Toast.LENGTH_SHORT).show();
-                //TODO add book to the sql database
+                Books b = new Books(id.getText().toString(), name.getText().toString(), author.getText().toString());
+                try {
+                    newUserHandler.addBook(b);
+                    Toast.makeText(getContext(), id.getText().toString(), Toast.LENGTH_SHORT).show();
+                    dismiss();
+                }catch (SQLIntegrityConstraintViolationException e){
+                    Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
 
+    @Override
+    public void dismiss() {
+        super.dismiss();
     }
 }
