@@ -19,6 +19,13 @@ import com.example.dilraj.dbms.R;
 public class AddBookDialog extends DialogFragment {
     EditText id,name,author;
     Button addbook_button;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(DialogFragment.STYLE_NO_FRAME,R.style.DialogTheme);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

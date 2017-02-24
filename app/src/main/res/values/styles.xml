@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog" >
+        <item name="android:windowBackground">@color/Grey</item>
+        <item name="android:windowMinWidthMinor">280dp</item>
+    </style>
+
 </resources>
