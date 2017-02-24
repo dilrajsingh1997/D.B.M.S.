@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="1dp"
+    android:background="@color/row_bg"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/user_row_roll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/userrow_textroll"
+        android:textColor="@color/row_text"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/user_row_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:text="@string/userrow_textname"
+        android:textColor="@color/row_text"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/user_row_branch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:text="@string/userrow_textbranch"
+        android:textColor="@color/row_text"
+        android:textSize="20sp" />
+
+
+</LinearLayout>
