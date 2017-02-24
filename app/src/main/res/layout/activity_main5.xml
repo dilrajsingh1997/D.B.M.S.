@@ -8,14 +8,193 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.dilraj.dbms.Main5Activity">
 
-    <Button
-        android:text="List of users"
-        android:layout_width="wrap_content"
+    tools:context="com.example.dilraj.dbms.Main5Activity">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:id="@+id/linear_layout2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/button6" />
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/button6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/user_list"
+            android:background="@drawable/btn_bg"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/book_list"
+            android:background="@drawable/btn_bg"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/rent_list"
+            android:background="@drawable/btn_bg"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_layoutusers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linear_layout2"
+        android:layout_margin="1dp"
+        android:background="@color/row_bg"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/user_row_roll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/userrow_textroll"
+            android:textColor="@color/row_text"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/user_row_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:text="@string/userrow_textname"
+            android:textColor="@color/row_text"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/user_row_branch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:text="@string/userrow_textbranch"
+            android:textColor="@color/row_text"
+            android:textSize="20sp" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_below="@id/linear_layout2"
+        android:id="@+id/linear_layoutubooks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:background="@color/row_bg"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/book_row_ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bookrow_id"
+            android:textColor="@color/row_text"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/book_row_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:text="@string/userrow_textname"
+            android:textColor="@color/row_text"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/book_row_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:text="@string/bookrow_author"
+            android:textColor="@color/row_text"
+            android:textSize="20sp" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linear_layoutrent"
+        android:layout_below="@id/linear_layout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:background="@color/row_bg"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/rent_row_userid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rentrow_userid"
+            android:textColor="@color/row_text"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/rent_row_bookid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:text="@string/bookrow_bookid"
+            android:textColor="@color/row_text"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/rent_row_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:text="@string/rentrow_date"
+            android:textColor="@color/row_text"
+            android:textSize="20sp" />
+
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recylclerview1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/linear_layoutusers"
+        android:visibility="gone" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recylclerview2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/linear_layoutusers"
+        android:visibility="gone" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recylclerview3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/linear_layoutusers"
+        android:visibility="gone" />
 </RelativeLayout>

@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteAbortException;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class NewUserHandler extends SQLiteOpenHelper {
     private static final String COLUMN_ROLL = "roll";
     private static final String COLUMN_PHONE = "phone";
     private static final String COLUMN_ADDRESS = "address";
-    private static final String COLUMN_PSSWD= "passwd";
+    private static final String COLUMN_PSSWD = "passwd";
 
     private static final String TABLE_ADMINS = "admins";
     private static final String COLUMN_ADMIN_UID = "admin_uid";
@@ -39,6 +38,10 @@ public class NewUserHandler extends SQLiteOpenHelper {
     private static final String COLUMN_USERID = "id_rent";
     private static final String COLUMN_BOOKID = "book_id_rent";
     private static final String COLUMN_DATE = "date";
+
+    public NewUserHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -85,10 +88,6 @@ public class NewUserHandler extends SQLiteOpenHelper {
         db.execSQL(q);
     }
 
-    public NewUserHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
-    }
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
@@ -97,8 +96,8 @@ public class NewUserHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addUserDB(USers u) throws SQLiteConstraintException, SQLiteAbortException, SQLIntegrityConstraintViolationException{
-        try{
+    public void addUserDB(USers u) throws SQLiteConstraintException, SQLiteAbortException, SQLIntegrityConstraintViolationException {
+        try {
             ContentValues values = new ContentValues();
             values.put(COLUMN_NAME, u.getName());
             values.put(COLUMN_BRANCH, u.getBranch());
@@ -109,19 +108,18 @@ public class NewUserHandler extends SQLiteOpenHelper {
             SQLiteDatabase db = getWritableDatabase();
             db.insert(TABLE_USERS, null, values);
             db.close();
-        }
-        catch (SQLiteConstraintException e){
+        } catch (SQLiteConstraintException e) {
             throw new SQLIntegrityConstraintViolationException(e.toString());
         }
     }
 
-    public ArrayList<USers> test2(){
+    public ArrayList<USers> getUsers() {
         ArrayList<USers> ar = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         String q = "SELECT * FROM " + TABLE_USERS + " WHERE 1";
         Cursor c = db.rawQuery(q, null);
         c.moveToFirst();
-        while(!c.isAfterLast()){
+        while (!c.isAfterLast()) {
             USers u = new USers(c.getString(c.getColumnIndex(COLUMN_NAME)),
                     c.getString(c.getColumnIndex(COLUMN_BRANCH)),
                     c.getString(c.getColumnIndex(COLUMN_ROLL)),
@@ -138,33 +136,13 @@ public class NewUserHandler extends SQLiteOpenHelper {
         return ar;
     }
 
-    public ArrayList<String> test(){
-        ArrayList<String> ar = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        String q = "SELECT * FROM " + TABLE_USERS + " WHERE 1";
-        Cursor c = db.rawQuery(q, null);
-        c.moveToFirst();
-        while(!c.isAfterLast()){
-            /*USers u = new USers(c.getString(c.getColumnIndex(COLUMN_NAME)),
-                    c.getString(c.getColumnIndex(COLUMN_BRANCH)),
-                    c.getString(c.getColumnIndex(COLUMN_ROLL)),
-                    c.getString(c.getColumnIndex(COLUMN_PHONE)),
-                    c.getString(c.getColumnIndex(COLUMN_ADDRESS)),
-                    c.getString(c.getColumnIndex(COLUMN_PSSWD)));*/
-            ar.add(c.getString(c.getColumnIndex(COLUMN_ROLL)) + c.getString(c.getColumnIndex(COLUMN_NAME)));
-            c.moveToNext();
-        }
-        db.close();
-        c.close();
-        return ar;
-    }
 
-    public boolean authAdmin(String id, String pass){
+    public boolean authAdmin(String id, String pass) {
         SQLiteDatabase db = getReadableDatabase();
         String q = "SELECT * FROM " + TABLE_ADMINS + " WHERE " + COLUMN_ADMIN_UID + " = \"" + id + "\" AND " + COLUMN_ADMIN_PSSWD + " = \"" + pass + "\"";
         Cursor c = db.rawQuery(q, null);
         c.moveToFirst();
-        if(c.getCount()>0){
+        if (c.getCount() > 0) {
             c.close();
             return true;
         }
@@ -172,12 +150,12 @@ public class NewUserHandler extends SQLiteOpenHelper {
         return false;
     }
 
-    public boolean authUser(String roll, String pass){
+    public boolean authUser(String roll, String pass) {
         SQLiteDatabase db = getReadableDatabase();
         String q = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_ROLL + " = \"" + roll + "\" AND " + COLUMN_PSSWD + " = \"" + pass + "\"";
         Cursor c = db.rawQuery(q, null);
         c.moveToFirst();
-        if(c.getCount()>0){
+        if (c.getCount() > 0) {
             c.close();
             return true;
         }
@@ -186,12 +164,12 @@ public class NewUserHandler extends SQLiteOpenHelper {
     }
 
 
-    public boolean checkUser(String roll){
+    public boolean checkUser(String roll) {
         SQLiteDatabase db = getReadableDatabase();
         String q = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_ROLL + " = \"" + roll + "\"";
         Cursor c = db.rawQuery(q, null);
         c.moveToFirst();
-        if(c.getCount()>0){
+        if (c.getCount() > 0) {
             c.close();
             return true;
         }
@@ -199,25 +177,43 @@ public class NewUserHandler extends SQLiteOpenHelper {
         return false;
     }
 
-    public ArrayList<String> getUsers(){
-        ArrayList<String> ar = new ArrayList<>();
+    public ArrayList<Books> getBooks() {
+        ArrayList<Books> ar = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        String q = "SELECT * FROM " + TABLE_USERS + " WHERE 1";
+        String q = "SELECT * FROM " + TABLE_BOOKS + " WHERE 1";
         Cursor c = db.rawQuery(q, null);
         c.moveToFirst();
-        while(!c.isAfterLast()){
-            /*USers u = new USers(c.getString(c.getColumnIndex(COLUMN_NAME)),
-                    c.getString(c.getColumnIndex(COLUMN_BRANCH)),
-                    c.getString(c.getColumnIndex(COLUMN_ROLL)),
-                    c.getString(c.getColumnIndex(COLUMN_PHONE)),
-                    c.getString(c.getColumnIndex(COLUMN_ADDRESS)),
-                    c.getString(c.getColumnIndex(COLUMN_PSSWD)));*/
-            ar.add(c.getString(c.getColumnIndex(COLUMN_ROLL)) + " " + c.getString(c.getColumnIndex(COLUMN_NAME)));
+        while (!c.isAfterLast()) {
+            Books u = new Books(c.getString(c.getColumnIndex(COLUMN_BOOK_ID)), c.getString(c.getColumnIndex(COLUMN_BOOK_NAME)),
+                    c.getString(c.getColumnIndex(COLUMN_BOOK_AUTHORNAME)));
+            ar.add(u);
+            u = null;
+            System.gc();
             c.moveToNext();
         }
         db.close();
         c.close();
         return ar;
     }
+    public ArrayList<Rent> getRent() {
+        ArrayList<Rent> ar = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String q = "SELECT * FROM " + TABLE_RENT + " WHERE 1";
+        Cursor c = db.rawQuery(q, null);
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            Rent u = new Rent(c.getString(c.getColumnIndex(COLUMN_USERID)), c.getString(c.getColumnIndex(COLUMN_BOOKID)),
+                    c.getString(c.getColumnIndex(COLUMN_DATE)));
+            ar.add(u);
+            u = null;
+            System.gc();
+            c.moveToNext();
+        }
+        db.close();
+        c.close();
+        return ar;
+    }
+
+
 
 }

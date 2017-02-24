@@ -3,4 +3,13 @@
     <string name="userrow_textroll">ROLL</string>
     <string name="userrow_textname">NAME</string>
     <string name="userrow_textbranch">BRANCH</string>
+    <string name="user_list">User List</string>
+    <string name="book_list">Book List</string>
+    <string name="rent_list">Rent List</string>
+    <string name="bookrow_id">ID</string>
+    <string name="bookrow_author">AUTHOR</string>
+    <string name="rentrow_userid">USER_ID</string>
+    <string name="bookrow_bookid">BOOK_ID</string>
+    <string name="rentrow_date">DATE</string>
+    <string name="admin_menu_addbook">Add Book</string>
 </resources>

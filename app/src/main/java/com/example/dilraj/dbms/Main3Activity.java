@@ -3,8 +3,6 @@ package com.example.dilraj.dbms;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,14 +11,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.ArrayList;
 
 public class Main3Activity extends AppCompatActivity {
 
     EditText e1, e2, e3, e4, e5, e6;
     String name, branch, roll, phone, address, psswd;
     NewUserHandler newUserHandler;
-    RecyclerView ls;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +32,7 @@ public class Main3Activity extends AppCompatActivity {
         e4 = (EditText) findViewById(R.id.editText5);
         e5 = (EditText) findViewById(R.id.editText6);
         e6 = (EditText) findViewById(R.id.editText7);
-        ls = (RecyclerView) findViewById(R.id.listView);
+
     }
 
     @Override
@@ -72,11 +69,7 @@ public class Main3Activity extends AppCompatActivity {
         }catch (SQLIntegrityConstraintViolationException e){
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
-        ArrayList<USers> ar = newUserHandler.test2();
-        UserAdapter adapter=new UserAdapter(this,ar);
-        ls.setAdapter(adapter);
-        LinearLayoutManager manager=new LinearLayoutManager(this);
-        ls.setLayoutManager(manager);
+
     }
 
 }
