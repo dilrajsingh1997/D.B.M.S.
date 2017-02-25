@@ -112,16 +112,14 @@ public class NewUserHandler extends SQLiteOpenHelper {
             SQLiteDatabase db = getWritableDatabase();
             db.insert(TABLE_USERS, null, values);
             db.close();
-        }
-        catch (SQLiteAbortException e){
+        } catch (SQLiteAbortException e) {
             throw new SQLiteAbortException(e.toString());
-        }
-        catch (SQLiteConstraintException e){
+        } catch (SQLiteConstraintException e) {
             throw new SQLiteConstraintException(e.toString());
         }
     }
 
-    public void addBook(Books b) throws SQLIntegrityConstraintViolationException, SQLiteAbortException, SQLiteConstraintException{
+    public void addBook(Books b) throws SQLIntegrityConstraintViolationException, SQLiteAbortException, SQLiteConstraintException {
         try {
             ContentValues values = new ContentValues();
             values.put(COLUMN_BOOK_ID, b.getId());
@@ -130,16 +128,14 @@ public class NewUserHandler extends SQLiteOpenHelper {
             SQLiteDatabase db = getWritableDatabase();
             db.insert(TABLE_BOOKS, null, values);
             db.close();
-        }
-        catch (SQLiteAbortException e){
+        } catch (SQLiteAbortException e) {
             throw new SQLiteAbortException(e.toString());
-        }
-        catch (SQLiteConstraintException e){
+        } catch (SQLiteConstraintException e) {
             throw new SQLiteConstraintException(e.toString());
         }
     }
 
-    public void addRent(Rent r){
+    public void addRent(Rent r) {
         try {
             ContentValues values = new ContentValues();
             values.put(COLUMN_USERID, r.getUserid());
@@ -148,16 +144,14 @@ public class NewUserHandler extends SQLiteOpenHelper {
             SQLiteDatabase db = getWritableDatabase();
             db.insert(TABLE_BOOKS, null, values);
             db.close();
-        }
-        catch (SQLiteAbortException e){
+        } catch (SQLiteAbortException e) {
             throw new SQLiteAbortException(e.toString());
-        }
-        catch (SQLiteConstraintException e){
+        } catch (SQLiteConstraintException e) {
             throw new SQLiteConstraintException(e.toString());
         }
     }
 
-    public boolean onRent(String id){
+    public boolean onRent(String id) {
         SQLiteDatabase db = getReadableDatabase();
         String q = "SELECT * FROM " + TABLE_RENT + " WHERE " + COLUMN_BOOKID + " = \"" + id + "\"";
         Cursor c = db.rawQuery(q, null);
@@ -252,6 +246,7 @@ public class NewUserHandler extends SQLiteOpenHelper {
         c.close();
         return ar;
     }
+
     public ArrayList<Rent> getRent() {
         ArrayList<Rent> ar = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
@@ -272,5 +267,11 @@ public class NewUserHandler extends SQLiteOpenHelper {
     }
 
 
+    public void delete_book(int adapterPosition) {
+        SQLiteDatabase db = getWritableDatabase();
+        String q = "DELETE FROM " + TABLE_BOOKS + " WHERE " + COLUMN_BOOK_ID + "= '" + adapterPosition + "'";
+        db.execSQL(q);
+        db.close();
 
+    }
 }

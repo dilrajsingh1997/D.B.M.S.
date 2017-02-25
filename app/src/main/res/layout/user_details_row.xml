@@ -5,7 +5,7 @@
     android:background="@color/row_bg"
     android:gravity="center"
     android:orientation="horizontal"
-    android:padding="15dp">
+    android:padding="7dp">
 
     <TextView
         android:id="@+id/user_row_roll"

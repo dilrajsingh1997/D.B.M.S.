@@ -15,6 +15,7 @@
         android:hint="Book ID"
         android:inputType="text"
         android:maxLines="1"
+        android:textColor="#fff"
         android:minEms="6"
         android:minWidth="40dp"
         android:textColorHint="#fff" />
@@ -25,6 +26,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:hint="Name"
+        android:textColor="#fff"
         android:inputType="text"
         android:maxLines="1"
         android:minEms="6"
@@ -36,6 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:textColor="#fff"
         android:hint="Author"
         android:inputType="text"
         android:maxLines="1"
@@ -46,6 +49,8 @@
     <Button
         android:id="@+id/addbook_button"
         android:layout_width="wrap_content"
+        android:layout_margin="10dp"
+        android:textColor="#fff"
         android:layout_height="wrap_content"
         android:text="Add Book"
         android:background="@drawable/btn_bg"

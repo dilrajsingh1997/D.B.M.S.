@@ -1,6 +1,5 @@
 package com.example.dilraj.dbms.Dialogs;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -12,7 +11,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.dilraj.dbms.Books;
-import com.example.dilraj.dbms.Main5Activity;
 import com.example.dilraj.dbms.NewUserHandler;
 import com.example.dilraj.dbms.R;
 
@@ -53,7 +51,7 @@ public class AddBookDialog extends DialogFragment {
                 Books b = new Books(id.getText().toString(), name.getText().toString(), author.getText().toString());
                 try {
                     newUserHandler.addBook(b);
-                    Toast.makeText(getContext(), id.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"Book Added", Toast.LENGTH_SHORT).show();
                     dismiss();
                 }catch (SQLIntegrityConstraintViolationException e){
                     Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
