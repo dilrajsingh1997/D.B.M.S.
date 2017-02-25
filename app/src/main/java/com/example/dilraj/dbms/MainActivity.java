@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
                         result = newUserHandler.authUser(name, pass);
                         if(result){
                             Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                            Intent i=new Intent(MainActivity.this,UserActivity.class);
+                            startActivity(i);
                         }
                         else{
                             Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_SHORT).show();

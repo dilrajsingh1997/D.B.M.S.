@@ -1,6 +1,6 @@
 package com.example.dilraj.dbms;
 
-/**
+/*
  * Created by dilraj on 22/2/17.
  */
 

@@ -12,4 +12,7 @@
     <string name="bookrow_bookid">BOOK_ID</string>
     <string name="rentrow_date">DATE</string>
     <string name="admin_menu_addbook">Add Book</string>
+    <string name="previous_issued">Previously Issued</string>
+    <string name="current_issues">Currently Issued</string>
+    <string name="rent_book">Rent Book</string>
 </resources>
