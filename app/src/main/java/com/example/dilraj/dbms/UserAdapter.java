@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.dilraj.dbms.Interface.UserClickInterface;
+
 import java.util.ArrayList;
 
 /**
@@ -15,8 +17,9 @@ import java.util.ArrayList;
 public class UserAdapter extends RecyclerView.Adapter<User_row> {
     LayoutInflater inflater;
     ArrayList<USers> mUsers;
-
-    public UserAdapter(Context context, ArrayList<USers> users) {
+    UserClickInterface clickInterface;
+    public UserAdapter(Context context, ArrayList<USers> users,UserClickInterface userClickInterface) {
+        clickInterface=userClickInterface;
         inflater = LayoutInflater.from(context);
         mUsers = users;
     }
@@ -25,7 +28,7 @@ public class UserAdapter extends RecyclerView.Adapter<User_row> {
     @Override
     public User_row onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = inflater.inflate(R.layout.user_details_row, parent, false);
-        return new User_row(v);
+        return new User_row(v,clickInterface);
     }
 
     @Override

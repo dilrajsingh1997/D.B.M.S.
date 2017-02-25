@@ -17,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.dilraj.dbms.Dialogs.AddBookDialog;
+import com.example.dilraj.dbms.Dialogs.UserDetailsDialog;
+import com.example.dilraj.dbms.Interface.UserClickInterface;
 
 import java.util.ArrayList;
 
@@ -29,6 +31,18 @@ public class Main5Activity extends AppCompatActivity {
     ArrayList<Books> books;
     ArrayList<USers> users;
     ArrayList<Rent> rents;
+    UserClickInterface clickinterface=new UserClickInterface() {
+        @Override
+        public void OnClick(int position) {
+            USers user=users.get(position);
+            UserDetailsDialog dialog=new UserDetailsDialog();
+            Bundle bundle=new Bundle();
+            bundle.putString("PHONE",user.getPhone());
+            bundle.putString("ADD",user.getAddress());
+            dialog.setArguments(bundle);
+            dialog.show(getSupportFragmentManager(),"USERS");
+        }
+    };
     Handler handler = new Handler();
     Runnable checkAct = new Runnable() {
         @Override
@@ -40,7 +54,7 @@ public class Main5Activity extends AppCompatActivity {
             LinearLayoutManager manager2 = new LinearLayoutManager(Main5Activity.this);
             LinearLayoutManager manager3 = new LinearLayoutManager(Main5Activity.this);
             BookAdapter bookAdapter = new BookAdapter(Main5Activity.this, books);
-            UserAdapter userAdapter = new UserAdapter(Main5Activity.this, users);
+            UserAdapter userAdapter = new UserAdapter(Main5Activity.this, users,clickinterface);
             RentAdapter rentAdapter = new RentAdapter(Main5Activity.this, rents);
             user_recylcer.setAdapter(userAdapter);
             user_recylcer.setLayoutManager(manager1);
