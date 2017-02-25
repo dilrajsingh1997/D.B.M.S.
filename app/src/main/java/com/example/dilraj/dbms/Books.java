@@ -5,12 +5,22 @@ package com.example.dilraj.dbms;
  */
 
 public class Books {
-    private String id,name,author;
+    private String id, name, author;
+    private int status;
 
-    public Books(String id, String name, String author) {
+    public Books(String id, String name, String author, int status) {
         this.id = id;
         this.name = name;
         this.author = author;
+        this.status = status;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getId() {

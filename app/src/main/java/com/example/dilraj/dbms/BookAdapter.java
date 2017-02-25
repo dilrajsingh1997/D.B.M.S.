@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.dilraj.dbms.Interface.BookClickInterface;
+
 import java.util.ArrayList;
 
 /**
@@ -15,8 +17,11 @@ import java.util.ArrayList;
 public class BookAdapter extends RecyclerView.Adapter<Book_row> {
     LayoutInflater inflater;
     ArrayList<Books> books;
-
-    public BookAdapter(Context mContext, ArrayList<Books> books) {
+    int f;
+    BookClickInterface clickInterface;
+    public BookAdapter(Context mContext, ArrayList<Books> books, BookClickInterface bookClickInterface,int FLAG) {
+        clickInterface=bookClickInterface;
+        f=FLAG;
         inflater = LayoutInflater.from(mContext);
         this.books = books;
     }
@@ -24,7 +29,7 @@ public class BookAdapter extends RecyclerView.Adapter<Book_row> {
     @Override
     public Book_row onCreateViewHolder(ViewGroup parent, int viewType) {
         View v=inflater.inflate(R.layout.book_details_row,parent,false);
-        return new Book_row(v);
+        return new Book_row(v,clickInterface,f);
     }
 
     @Override

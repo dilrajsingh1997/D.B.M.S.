@@ -39,7 +39,7 @@
         android:layout_marginStart="15dp"
         android:text="@string/rentrow_date"
         android:textColor="@color/row_text"
-        android:textSize="20sp" />
+        android:textSize="12sp" />
 
 
 </LinearLayout>

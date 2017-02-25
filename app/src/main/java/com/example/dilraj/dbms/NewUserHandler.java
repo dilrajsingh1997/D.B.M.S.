@@ -11,13 +11,9 @@ import android.database.sqlite.SQLiteAbortException;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 import java.sql.SQLIntegrityConstraintViolationException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class NewUserHandler extends SQLiteOpenHelper {
 
@@ -41,6 +37,7 @@ public class NewUserHandler extends SQLiteOpenHelper {
     private static final String COLUMN_BOOK_ID = "book_id";
     private static final String COLUMN_BOOK_NAME = "book_name";
     private static final String COLUMN_BOOK_AUTHORNAME = "book_authorname";
+    private static final String COLUMN_BOOK_STATUS = "book_status";
 
     private static final String TABLE_RENT = "rents";
     private static final String COLUMN_USERID = "id_rent";
@@ -81,7 +78,8 @@ public class NewUserHandler extends SQLiteOpenHelper {
                 COLUMN_ID + " INTEGER AUTO INCREMENT, " +
                 COLUMN_BOOK_ID + " VARCHAR(200) PRIMARY KEY, " +
                 COLUMN_BOOK_NAME + " VARCHAR(200), " +
-                COLUMN_BOOK_AUTHORNAME + " VARCHAR(200)" +
+                COLUMN_BOOK_AUTHORNAME + " VARCHAR(200), " +
+                COLUMN_BOOK_STATUS + " INTEGER" +
                 ");";
         db.execSQL(q);
         q = "CREATE TABLE IF NOT EXISTS " + TABLE_RENT + "(" +
@@ -113,10 +111,10 @@ public class NewUserHandler extends SQLiteOpenHelper {
                 " old." + COLUMN_USERID + ", " +
                 " old." + COLUMN_BOOKID + ", " +
                 " old." + COLUMN_DATE + ", \"" +
-                "date('now')" +  "\" );" +
+                "date('now')" + "\" );" +
                 " END;";
 //        try{
-            db.execSQL(q);
+        db.execSQL(q);
 //        } catch (Exception e){
 //            e.printStackTrace();
 //        }
@@ -156,6 +154,7 @@ public class NewUserHandler extends SQLiteOpenHelper {
             values.put(COLUMN_BOOK_ID, b.getId());
             values.put(COLUMN_BOOK_NAME, b.getName());
             values.put(COLUMN_BOOK_AUTHORNAME, b.getAuthor());
+            values.put(COLUMN_BOOK_STATUS, 0);
             SQLiteDatabase db = getWritableDatabase();
             db.insert(TABLE_BOOKS, null, values);
             db.close();
@@ -170,10 +169,10 @@ public class NewUserHandler extends SQLiteOpenHelper {
         try {
             ContentValues values = new ContentValues();
             values.put(COLUMN_USERID, r.getUserid());
-            values.put(COLUMN_BOOKID, r.getUserid());
+            values.put(COLUMN_BOOKID, r.getBookid());
             values.put(COLUMN_DATE, r.getDate());
             SQLiteDatabase db = getWritableDatabase();
-            db.insert(TABLE_BOOKS, null, values);
+            db.insert(TABLE_RENT, null, values);
             db.close();
         } catch (SQLiteAbortException e) {
             throw new SQLiteAbortException(e.toString());
@@ -267,7 +266,7 @@ public class NewUserHandler extends SQLiteOpenHelper {
         c.moveToFirst();
         while (!c.isAfterLast()) {
             Books u = new Books(c.getString(c.getColumnIndex(COLUMN_BOOK_ID)), c.getString(c.getColumnIndex(COLUMN_BOOK_NAME)),
-                    c.getString(c.getColumnIndex(COLUMN_BOOK_AUTHORNAME)));
+                    c.getString(c.getColumnIndex(COLUMN_BOOK_AUTHORNAME)), c.getInt(c.getColumnIndex(COLUMN_BOOK_STATUS)));
             ar.add(u);
             u = null;
             System.gc();
@@ -301,6 +300,33 @@ public class NewUserHandler extends SQLiteOpenHelper {
     public void delete_book(int adapterPosition) {
         SQLiteDatabase db = getWritableDatabase();
         String q = "DELETE FROM " + TABLE_BOOKS + " WHERE " + COLUMN_BOOK_ID + "= '" + adapterPosition + "'";
+        db.execSQL(q);
+        db.close();
+
+    }
+
+    public ArrayList<Books> getBooksUnIssued() {
+        ArrayList<Books> ar = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String q = "SELECT * FROM " + TABLE_BOOKS + " WHERE " + COLUMN_BOOK_STATUS + " =0";
+        Cursor c = db.rawQuery(q, null);
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            Books u = new Books(c.getString(c.getColumnIndex(COLUMN_BOOK_ID)), c.getString(c.getColumnIndex(COLUMN_BOOK_NAME)),
+                    c.getString(c.getColumnIndex(COLUMN_BOOK_AUTHORNAME)), c.getInt(c.getColumnIndex(COLUMN_BOOK_STATUS)));
+            ar.add(u);
+            u = null;
+            System.gc();
+            c.moveToNext();
+        }
+        db.close();
+        c.close();
+        return ar;
+    }
+
+    public void updateIssuedBooks(String bookid) {
+        SQLiteDatabase db = getWritableDatabase();
+        String q = "UPDATE " + TABLE_BOOKS + " SET " + COLUMN_BOOK_STATUS + " = 1 WHERE " + COLUMN_BOOK_ID +" = "+bookid ;
         db.execSQL(q);
         db.close();
 

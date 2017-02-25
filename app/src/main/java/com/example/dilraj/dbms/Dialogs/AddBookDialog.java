@@ -48,7 +48,7 @@ public class AddBookDialog extends DialogFragment {
         addbook_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Books b = new Books(id.getText().toString(), name.getText().toString(), author.getText().toString());
+                Books b = new Books(id.getText().toString(), name.getText().toString(), author.getText().toString(),0);
                 try {
                     newUserHandler.addBook(b);
                     Toast.makeText(getContext(),"Book Added", Toast.LENGTH_SHORT).show();
