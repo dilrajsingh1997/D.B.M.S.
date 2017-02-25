@@ -55,7 +55,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/linear_layout2"
-        android:layout_margin="1dp"
         android:background="@color/row_bg"
         android:gravity="center"
         android:orientation="horizontal"
@@ -64,7 +63,9 @@
 
         <TextView
             android:id="@+id/user_row_roll"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:text="@string/userrow_textroll"
             android:textColor="@color/row_text"
@@ -72,7 +73,9 @@
 
         <TextView
             android:id="@+id/user_row_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
@@ -82,7 +85,9 @@
 
         <TextView
             android:id="@+id/user_row_branch"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
@@ -97,7 +102,6 @@
         android:id="@+id/linear_layoutubooks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="1dp"
         android:background="@color/row_bg"
         android:gravity="center"
         android:orientation="horizontal"
@@ -106,7 +110,9 @@
 
         <TextView
             android:id="@+id/book_row_ID"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:text="@string/bookrow_id"
             android:textColor="@color/row_text"
@@ -114,7 +120,9 @@
 
         <TextView
             android:id="@+id/book_row_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
@@ -124,7 +132,9 @@
 
         <TextView
             android:id="@+id/book_row_author"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
@@ -139,7 +149,6 @@
         android:layout_below="@id/linear_layout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="1dp"
         android:background="@color/row_bg"
         android:gravity="center"
         android:orientation="horizontal"
@@ -148,7 +157,9 @@
 
         <TextView
             android:id="@+id/rent_row_userid"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:text="@string/rentrow_userid"
             android:textColor="@color/row_text"
@@ -156,7 +167,9 @@
 
         <TextView
             android:id="@+id/rent_row_bookid"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
@@ -166,7 +179,9 @@
 
         <TextView
             android:id="@+id/rent_row_date"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
@@ -188,13 +203,13 @@
         android:id="@+id/recylclerview2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/linear_layoutusers"
+        android:layout_below="@id/linear_layoutubooks"
         android:visibility="gone" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recylclerview3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/linear_layoutusers"
+        android:layout_below="@id/linear_layoutrent"
         android:visibility="gone" />
 </RelativeLayout>
