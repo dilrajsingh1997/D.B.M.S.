@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class NewUserHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 11;
+    private static final int DATABASE_VERSION = 14;
     private static final String DATABASE_NAME = "libDB.db";
     private static final String COLUMN_ID = "_id";
 
