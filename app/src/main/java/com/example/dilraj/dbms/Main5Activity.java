@@ -158,6 +158,7 @@ public class Main5Activity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     Book_row book_row= (Book_row) viewHolder;
                                     newUserHandler.delete_book(Integer.parseInt(book_row.id.getText().toString()));
+                                    handler.postDelayed(checkAct, 0);
                                 }
                             })
                             .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

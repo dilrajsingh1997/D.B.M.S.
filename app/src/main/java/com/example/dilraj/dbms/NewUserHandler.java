@@ -11,13 +11,17 @@ import android.database.sqlite.SQLiteAbortException;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class NewUserHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 14;
+    private static final int DATABASE_VERSION = 22;
     private static final String DATABASE_NAME = "libDB.db";
     private static final String COLUMN_ID = "_id";
 
@@ -42,6 +46,11 @@ public class NewUserHandler extends SQLiteOpenHelper {
     private static final String COLUMN_USERID = "id_rent";
     private static final String COLUMN_BOOKID = "book_id_rent";
     private static final String COLUMN_DATE = "date";
+
+    private static final String TABLE_HISTORY = "history_rent";
+    private static final String COLUMN_RETURN_DATE = "date_return";
+
+    private static final String TRIGGER = "own_trigger";
 
     public NewUserHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -90,6 +99,27 @@ public class NewUserHandler extends SQLiteOpenHelper {
                 COLUMN_BOOK_ID + ")" +
                 ");";
         db.execSQL(q);
+        q = "CREATE TABLE " + TABLE_HISTORY + "(" +
+                COLUMN_USERID + " VARCHAR(200), " +
+                COLUMN_BOOKID + " VARCHAR(200), " +
+                COLUMN_DATE + " VARCHAR(200), " +
+                COLUMN_RETURN_DATE + " VARCHAR(200))";
+        db.execSQL(q);
+        q = "CREATE TRIGGER " + TRIGGER +
+                " BEFORE DELETE ON " + TABLE_RENT +
+                " FOR EACH ROW " +
+                " BEGIN " +
+                " INSERT INTO " + TABLE_HISTORY + " VALUES (" +
+                " old." + COLUMN_USERID + ", " +
+                " old." + COLUMN_BOOKID + ", " +
+                " old." + COLUMN_DATE + ", \"" +
+                "date('now')" +  "\" );" +
+                " END;";
+//        try{
+            db.execSQL(q);
+//        } catch (Exception e){
+//            e.printStackTrace();
+//        }
     }
 
     @Override
@@ -97,6 +127,7 @@ public class NewUserHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ADMINS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_BOOKS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_HISTORY);
         onCreate(db);
     }
 
