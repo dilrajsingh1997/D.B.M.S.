@@ -64,7 +64,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:layout_height="wrap_content"
-            android:text="@string/userrow_textroll"
+            android:text="ID"
             android:textColor="@color/row_text"
             android:textSize="20sp" />
 
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
-            android:text="@string/userrow_textname"
+            android:text="DATE"
             android:textColor="@color/row_text"
             android:textSize="20sp" />
 
@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
-            android:text="@string/userrow_textbranch"
+            android:text="RETURN DATE"
             android:textColor="@color/row_text"
             android:textSize="20sp" />
 

@@ -304,13 +304,13 @@ public class NewUserHandler extends SQLiteOpenHelper {
     }
 
 
-    public void delete_book(String adapterPosition) throws SQLIntegrityConstraintViolationException, SQLiteConstraintException{
+    public void delete_book(String adapterPosition) throws SQLIntegrityConstraintViolationException, SQLiteConstraintException {
         try {
             SQLiteDatabase db = getWritableDatabase();
             String q = "DELETE FROM " + TABLE_BOOKS + " WHERE " + COLUMN_BOOK_ID + "= \"" + adapterPosition + "\"";
             db.execSQL(q);
             db.close();
-        } catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
     }
@@ -347,8 +347,8 @@ public class NewUserHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String q;
         try {
-            q = "SELECT " + COLUMN_BOOK_NAME + "," + COLUMN_BOOKID + "," + COLUMN_DATE + " FROM " + TABLE_RENT + "," + TABLE_BOOKS + " WHERE " + TABLE_RENT + "." + COLUMN_BOOKID + "=" + TABLE_BOOKS +"." +COLUMN_BOOK_ID + " AND " + COLUMN_USERID+ "=\"" +userid + "\";";
-        } catch (NullPointerException e){
+            q = "SELECT " + COLUMN_BOOK_NAME + "," + COLUMN_BOOKID + "," + COLUMN_DATE + " FROM " + TABLE_RENT + "," + TABLE_BOOKS + " WHERE " + TABLE_RENT + "." + COLUMN_BOOKID + "=" + TABLE_BOOKS + "." + COLUMN_BOOK_ID + " AND " + COLUMN_USERID + "=\"" + userid + "\";";
+        } catch (NullPointerException e) {
             throw e;
         }
         Cursor c = db.rawQuery(q, null);
@@ -366,5 +366,50 @@ public class NewUserHandler extends SQLiteOpenHelper {
         return ar;
     }
 
+    public void updateBooks(String bookid) {
+        SQLiteDatabase db = getWritableDatabase();
+        String q = "UPDATE " + TABLE_BOOKS + " SET " + COLUMN_BOOK_STATUS + " = 0 WHERE " + COLUMN_BOOK_ID + " = " + bookid;
+        db.execSQL(q);
+        db.close();
+
+    }
+
+    public void delete_rent(String bookid) {
+        try {
+            SQLiteDatabase db = getWritableDatabase();
+            String q = "DELETE FROM " + TABLE_RENT + " WHERE " + COLUMN_BOOKID + "=" + bookid;
+            db.execSQL(q);
+            db.close();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public void setHistoryReturnDate(String date, String returndate) {
+        SQLiteDatabase db = getWritableDatabase();
+        String q = "UPDATE " + TABLE_HISTORY + " SET " + COLUMN_RETURN_DATE + "=" + " '" + returndate + "'" + "  WHERE " + COLUMN_DATE + " = " + " '" + date + "'";
+        db.execSQL(q);
+        db.close();
+    }
+
+    public ArrayList<Rent> getHistoryrent(String id) {
+        ArrayList<Rent> ar = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String q = "SELECT * FROM " + TABLE_HISTORY + " WHERE " + COLUMN_USERID + "= " + "'" + id + "'";
+        Cursor c = db.rawQuery(q, null);
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            Rent u = new Rent(c.getString(c.getColumnIndex(COLUMN_BOOKID)), c.getString(c.getColumnIndex(COLUMN_DATE)),
+                    c.getString(c.getColumnIndex(COLUMN_RETURN_DATE)));
+            ar.add(u);
+            u = null;
+            System.gc();
+            c.moveToNext();
+        }
+        db.close();
+        c.close();
+        return ar;
+
+    }
 }
 

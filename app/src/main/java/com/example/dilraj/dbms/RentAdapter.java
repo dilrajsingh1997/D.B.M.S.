@@ -45,4 +45,9 @@ public class RentAdapter extends RecyclerView.Adapter<Rent_row> {
         this.rents=rents;
         notifyItemInserted(size-1);
     }
+
+    public void itemRemoved(ArrayList<Rent> rents, int adapterPosition) {
+        this.rents=rents;
+        notifyItemRemoved(adapterPosition);
+    }
 }
