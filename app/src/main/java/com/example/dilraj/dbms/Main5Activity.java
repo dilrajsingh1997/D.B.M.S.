@@ -50,71 +50,13 @@ public class Main5Activity extends AppCompatActivity {
             dialog.show(getSupportFragmentManager(),"USERS");
         }
     };
-    Handler handler = new Handler();
+    /*Handler handler = new Handler();
     Runnable checkAct = new Runnable() {
         @Override
         public void run() {
-            users = newUserHandler.getUsers();
-            books = newUserHandler.getBooks();
-            rents = newUserHandler.getRent();
-            LinearLayoutManager manager1 = new LinearLayoutManager(Main5Activity.this);
-            LinearLayoutManager manager2 = new LinearLayoutManager(Main5Activity.this);
-            LinearLayoutManager manager3 = new LinearLayoutManager(Main5Activity.this);
-            BookAdapter bookAdapter = new BookAdapter(Main5Activity.this, books,clickInterface,0);
-            UserAdapter userAdapter = new UserAdapter(Main5Activity.this, users,clickinterface);
-            RentAdapter rentAdapter = new RentAdapter(Main5Activity.this, rents);
-            user_recylcer.setAdapter(userAdapter);
-            user_recylcer.setLayoutManager(manager1);
-            book_recylcer.setAdapter(bookAdapter);
-            book_recylcer.setLayoutManager(manager2);
-            rent_recylcer.setAdapter(rentAdapter);
-            rent_recylcer.setLayoutManager(manager3);
-            user_list.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    user_layout.setVisibility(View.VISIBLE);
-                    book_layout.setVisibility(View.GONE);
-                    rent_layout.setVisibility(View.GONE);
-                    user_recylcer.setVisibility(View.VISIBLE);
-                    book_recylcer.setVisibility(View.GONE);
-                    rent_recylcer.setVisibility(View.GONE);
-                    user_list.setSelected(true);
-                    book_list.setSelected(false);
-                    rent_list.setSelected(false);
-                }
-            });
-            book_list.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    user_layout.setVisibility(View.GONE);
-                    book_layout.setVisibility(View.VISIBLE);
-                    rent_layout.setVisibility(View.GONE);
-                    user_recylcer.setVisibility(View.GONE);
-                    book_recylcer.setVisibility(View.VISIBLE);
-                    rent_recylcer.setVisibility(View.GONE);
-                    user_list.setSelected(false);
-                    book_list.setSelected(true);
-                    rent_list.setSelected(false);
-
-                }
-            });
-            rent_list.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    user_layout.setVisibility(View.GONE);
-                    book_layout.setVisibility(View.GONE);
-                    rent_layout.setVisibility(View.VISIBLE);
-                    user_recylcer.setVisibility(View.GONE);
-                    book_recylcer.setVisibility(View.GONE);
-                    rent_recylcer.setVisibility(View.VISIBLE);
-                    user_list.setSelected(false);
-                    book_list.setSelected(false);
-                    rent_list.setSelected(true);
-                }
-            });
             handler.postDelayed(checkAct, 2000);
         }
-    };
+    };*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +75,64 @@ public class Main5Activity extends AppCompatActivity {
         users = newUserHandler.getUsers();
         books = newUserHandler.getBooks();
         rents = newUserHandler.getRent();
+        users = newUserHandler.getUsers();
+        books = newUserHandler.getBooks();
+        rents = newUserHandler.getRent();
+        LinearLayoutManager manager1 = new LinearLayoutManager(Main5Activity.this);
+        LinearLayoutManager manager2 = new LinearLayoutManager(Main5Activity.this);
+        LinearLayoutManager manager3 = new LinearLayoutManager(Main5Activity.this);
+        BookAdapter bookAdapter = new BookAdapter(Main5Activity.this, books,clickInterface,0);
+        UserAdapter userAdapter = new UserAdapter(Main5Activity.this, users,clickinterface);
+        RentAdapter rentAdapter = new RentAdapter(Main5Activity.this, rents);
+        user_recylcer.setAdapter(userAdapter);
+        user_recylcer.setLayoutManager(manager1);
+        book_recylcer.setAdapter(bookAdapter);
+        book_recylcer.setLayoutManager(manager2);
+        rent_recylcer.setAdapter(rentAdapter);
+        rent_recylcer.setLayoutManager(manager3);
+        user_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                user_layout.setVisibility(View.VISIBLE);
+                book_layout.setVisibility(View.GONE);
+                rent_layout.setVisibility(View.GONE);
+                user_recylcer.setVisibility(View.VISIBLE);
+                book_recylcer.setVisibility(View.GONE);
+                rent_recylcer.setVisibility(View.GONE);
+                user_list.setSelected(true);
+                book_list.setSelected(false);
+                rent_list.setSelected(false);
+            }
+        });
+        book_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                user_layout.setVisibility(View.GONE);
+                book_layout.setVisibility(View.VISIBLE);
+                rent_layout.setVisibility(View.GONE);
+                user_recylcer.setVisibility(View.GONE);
+                book_recylcer.setVisibility(View.VISIBLE);
+                rent_recylcer.setVisibility(View.GONE);
+                user_list.setSelected(false);
+                book_list.setSelected(true);
+                rent_list.setSelected(false);
+
+            }
+        });
+        rent_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                user_layout.setVisibility(View.GONE);
+                book_layout.setVisibility(View.GONE);
+                rent_layout.setVisibility(View.VISIBLE);
+                user_recylcer.setVisibility(View.GONE);
+                book_recylcer.setVisibility(View.GONE);
+                rent_recylcer.setVisibility(View.VISIBLE);
+                user_list.setSelected(false);
+                book_list.setSelected(false);
+                rent_list.setSelected(true);
+            }
+        });
         ItemTouchHelper.Callback callback = new ItemTouchHelper.Callback() {
             @Override
             public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
@@ -164,8 +164,12 @@ public class Main5Activity extends AppCompatActivity {
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     Book_row book_row= (Book_row) viewHolder;
-                                    newUserHandler.delete_book(Integer.parseInt(book_row.id.getText().toString()));
-                                    handler.postDelayed(checkAct, 0);
+                                    try {
+                                        newUserHandler.delete_book(book_row.id.getText().toString());
+                                    } catch (Exception e){
+                                        Toast.makeText(Main5Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                    }
+                                    //handler.postDelayed(checkAct, 0);
                                 }
                             })
                             .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -186,7 +190,7 @@ public class Main5Activity extends AppCompatActivity {
         };
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(book_recylcer);
-        handler.postDelayed(checkAct, 0);
+        /*handler.postDelayed(checkAct, 0);
 
         book_recylcer.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -225,7 +229,7 @@ public class Main5Activity extends AppCompatActivity {
                 super.onScrollStateChanged(recyclerView, newState);
                 handler.removeCallbacks(checkAct);
             }
-        });
+        });*/
 
     }
 
@@ -242,7 +246,7 @@ public class Main5Activity extends AppCompatActivity {
             case R.id.admin_menu_addbook:
                 AddBookDialog dialog = new AddBookDialog();
                 dialog.show(getSupportFragmentManager(), "ADD");
-                handler.postDelayed(checkAct, 0);
+                //handler.postDelayed(checkAct, 0);
                 return true;
 
             default:

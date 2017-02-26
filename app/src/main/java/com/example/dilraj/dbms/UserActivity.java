@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.dilraj.dbms.Interface.BookClickInterface;
 
@@ -45,7 +46,11 @@ public class UserActivity extends AppCompatActivity {
                             books.remove(position);
                             bookAdapter.itemRemoved(books,position);
                             rents.clear();
-                            rents=newUserHandler.getRentsOfUser(USERID);
+                            try{
+                                rents=newUserHandler.getRentsOfUser(USERID);
+                            } catch (Exception e){
+                                Toast.makeText(UserActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                            }
                             rentAdapter.itemAdded(rents,rents.size());
 
                         }
@@ -76,7 +81,11 @@ public class UserActivity extends AppCompatActivity {
         book_recylcer = (RecyclerView) findViewById(R.id.u_recylclerview2);
         rent_recylcer = (RecyclerView) findViewById(R.id.u_recylclerview3);
         books = newUserHandler.getBooksUnIssued();
-        rents=newUserHandler.getRentsOfUser(USERID);
+        try{
+            rents=newUserHandler.getRentsOfUser(USERID);
+        } catch (Exception e){
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+        }
         LinearLayoutManager manager1 = new LinearLayoutManager(UserActivity.this);
         LinearLayoutManager manager2 = new LinearLayoutManager(UserActivity.this);
         LinearLayoutManager manager3 = new LinearLayoutManager(UserActivity.this);

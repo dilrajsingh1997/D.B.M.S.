@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class NewUserHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 22;
+    private static final int DATABASE_VERSION = 27;
     private static final String DATABASE_NAME = "libDB.db";
     private static final String COLUMN_ID = "_id";
 
@@ -51,6 +51,13 @@ public class NewUserHandler extends SQLiteOpenHelper {
 
     public NewUserHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
+    }
+
+    @Override
+
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        db.execSQL("PRAGMA foreign_keys = ON;");
     }
 
     @Override
@@ -297,12 +304,15 @@ public class NewUserHandler extends SQLiteOpenHelper {
     }
 
 
-    public void delete_book(int adapterPosition) {
-        SQLiteDatabase db = getWritableDatabase();
-        String q = "DELETE FROM " + TABLE_BOOKS + " WHERE " + COLUMN_BOOK_ID + "= '" + adapterPosition + "'";
-        db.execSQL(q);
-        db.close();
-
+    public void delete_book(String adapterPosition) throws SQLIntegrityConstraintViolationException, SQLiteConstraintException{
+        try {
+            SQLiteDatabase db = getWritableDatabase();
+            String q = "DELETE FROM " + TABLE_BOOKS + " WHERE " + COLUMN_BOOK_ID + "= \"" + adapterPosition + "\"";
+            db.execSQL(q);
+            db.close();
+        } catch (Exception e){
+            throw e;
+        }
     }
 
     public ArrayList<Books> getBooksUnIssued() {
@@ -335,7 +345,12 @@ public class NewUserHandler extends SQLiteOpenHelper {
     public ArrayList<Rent> getRentsOfUser(String userid) {
         ArrayList<Rent> ar = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        String q = "SELECT " + COLUMN_BOOK_NAME + "," + COLUMN_BOOKID + "," + COLUMN_DATE + " FROM " + TABLE_RENT + "," + TABLE_BOOKS + " WHERE " + TABLE_RENT + "." + COLUMN_BOOKID + "=" + TABLE_BOOKS +"." +COLUMN_BOOK_ID + " AND " + COLUMN_USERID+ "=" +userid;
+        String q;
+        try {
+            q = "SELECT " + COLUMN_BOOK_NAME + "," + COLUMN_BOOKID + "," + COLUMN_DATE + " FROM " + TABLE_RENT + "," + TABLE_BOOKS + " WHERE " + TABLE_RENT + "." + COLUMN_BOOKID + "=" + TABLE_BOOKS +"." +COLUMN_BOOK_ID + " AND " + COLUMN_USERID+ "=\"" +userid + "\";";
+        } catch (NullPointerException e){
+            throw e;
+        }
         Cursor c = db.rawQuery(q, null);
         c.moveToFirst();
         while (!c.isAfterLast()) {
