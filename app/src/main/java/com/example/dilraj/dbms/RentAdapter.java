@@ -40,4 +40,9 @@ public class RentAdapter extends RecyclerView.Adapter<Rent_row> {
     public int getItemCount() {
         return rents.size();
     }
+
+    public void itemAdded(ArrayList<Rent> rents, int size) {
+        this.rents=rents;
+        notifyItemInserted(size-1);
+    }
 }

@@ -27,6 +27,7 @@ public class UserActivity extends AppCompatActivity {
     BookAdapter bookAdapter;
     ArrayList<Rent> rents;
     String USERID = null;
+    RentAdapter rentAdapter;
     BookClickInterface bookClickInterface = new BookClickInterface() {
         @Override
         public void OnClick(final int position) {
@@ -42,8 +43,7 @@ public class UserActivity extends AppCompatActivity {
                             newUserHandler.addRent(rent);
                             newUserHandler.updateIssuedBooks(bookid);
                             books.remove(position);
-                            bookAdapter.notifyItemRemoved(position);
-
+                            bookAdapter.itemRemoved(books,position);
 
                         }
                     })
@@ -61,6 +61,7 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+        USERID = getIntent().getStringExtra("USERID");
         prev = (Button) findViewById(R.id.u_button6);
         current = (Button) findViewById(R.id.u_button7);
         add = (Button) findViewById(R.id.u_button8);
@@ -72,12 +73,12 @@ public class UserActivity extends AppCompatActivity {
         book_recylcer = (RecyclerView) findViewById(R.id.u_recylclerview2);
         rent_recylcer = (RecyclerView) findViewById(R.id.u_recylclerview3);
         books = newUserHandler.getBooksUnIssued();
+        rents=newUserHandler.getRentsOfUser(USERID);
         LinearLayoutManager manager1 = new LinearLayoutManager(UserActivity.this);
         LinearLayoutManager manager2 = new LinearLayoutManager(UserActivity.this);
         LinearLayoutManager manager3 = new LinearLayoutManager(UserActivity.this);
-         bookAdapter = new BookAdapter(UserActivity.this, books, bookClickInterface, 1);
-        RentAdapter rentAdapter = new RentAdapter(UserActivity.this, rents);
-        USERID = getIntent().getStringExtra("USERID");
+        bookAdapter = new BookAdapter(UserActivity.this, books, bookClickInterface, 1);
+        rentAdapter = new RentAdapter(UserActivity.this, rents);
         book_recylcer.setAdapter(bookAdapter);
         book_recylcer.setLayoutManager(manager2);
         rent_recylcer.setAdapter(rentAdapter);
@@ -89,9 +90,26 @@ public class UserActivity extends AppCompatActivity {
                 prev_layout.setVisibility(View.GONE);
                 curr_layout.setVisibility(View.GONE);
                 book_recylcer.setVisibility(View.VISIBLE);
+                rent_recylcer.setVisibility(View.GONE);
                 add.setSelected(true);
                 prev.setSelected(false);
                 current.setSelected(false);
+            }
+        });
+        current.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rents.clear();
+                rents=newUserHandler.getRentsOfUser(USERID);
+                rentAdapter.itemAdded(rents,rents.size());
+                add_layout.setVisibility(View.GONE);
+                prev_layout.setVisibility(View.GONE);
+                curr_layout.setVisibility(View.VISIBLE);
+                book_recylcer.setVisibility(View.GONE);
+                rent_recylcer.setVisibility(View.VISIBLE);
+                add.setSelected(false);
+                prev.setSelected(false);
+                current.setSelected(true);
             }
         });
 

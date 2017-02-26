@@ -2,7 +2,6 @@ package com.example.dilraj.dbms;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -66,6 +65,7 @@ public class Main3Activity extends AppCompatActivity {
             newUserHandler.addUserDB(u);
             Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
             Intent i=new Intent(Main3Activity.this, UserActivity.class);
+            i.putExtra("USERID",roll);
             startActivity(i);
         }catch (SQLIntegrityConstraintViolationException e){
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();

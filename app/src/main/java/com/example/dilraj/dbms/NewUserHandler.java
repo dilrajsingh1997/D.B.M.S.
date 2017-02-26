@@ -93,7 +93,7 @@ public class NewUserHandler extends SQLiteOpenHelper {
                 COLUMN_ROLL + "), " +
                 "FOREIGN KEY (" +
                 COLUMN_BOOKID + ") REFERENCES " +
-                TABLE_USERS + "(" +
+                TABLE_BOOKS + "(" +
                 COLUMN_BOOK_ID + ")" +
                 ");";
         db.execSQL(q);
@@ -326,9 +326,30 @@ public class NewUserHandler extends SQLiteOpenHelper {
 
     public void updateIssuedBooks(String bookid) {
         SQLiteDatabase db = getWritableDatabase();
-        String q = "UPDATE " + TABLE_BOOKS + " SET " + COLUMN_BOOK_STATUS + " = 1 WHERE " + COLUMN_BOOK_ID +" = "+bookid ;
+        String q = "UPDATE " + TABLE_BOOKS + " SET " + COLUMN_BOOK_STATUS + " = 1 WHERE " + COLUMN_BOOK_ID + " = " + bookid;
         db.execSQL(q);
         db.close();
 
     }
+
+    public ArrayList<Rent> getRentsOfUser(String userid) {
+        ArrayList<Rent> ar = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String q = "SELECT " + COLUMN_BOOK_NAME + "," + COLUMN_BOOKID + "," + COLUMN_DATE + " FROM " + TABLE_RENT + "," + TABLE_BOOKS + " WHERE " + TABLE_RENT + "." + COLUMN_BOOKID + "=" + TABLE_BOOKS +"." +COLUMN_BOOK_ID + " AND " + COLUMN_USERID+ "=" +userid;
+        Cursor c = db.rawQuery(q, null);
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            Rent u = new Rent(c.getString(c.getColumnIndex(COLUMN_BOOK_NAME)), c.getString(c.getColumnIndex(COLUMN_BOOKID)),
+                    c.getString(c.getColumnIndex(COLUMN_DATE)));
+            ar.add(u);
+            u = null;
+            System.gc();
+            c.moveToNext();
+        }
+        db.close();
+        c.close();
+        return ar;
+    }
+
 }
+

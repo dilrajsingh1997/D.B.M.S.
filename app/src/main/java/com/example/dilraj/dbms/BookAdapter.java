@@ -44,4 +44,9 @@ public class BookAdapter extends RecyclerView.Adapter<Book_row> {
     public int getItemCount() {
         return books.size();
     }
+
+    public void itemRemoved(ArrayList<Books> books, int position) {
+        this.books=books;
+        notifyItemRemoved(position);
+    }
 }
