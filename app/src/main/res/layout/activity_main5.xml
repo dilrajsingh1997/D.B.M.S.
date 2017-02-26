@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingStart="2dp"
+    android:paddingEnd="2dp"
 
     tools:context="com.example.dilraj.dbms.Main5Activity">
     <android.support.v7.widget.Toolbar
@@ -52,6 +54,7 @@
         android:id="@+id/linear_layoutusers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
         android:layout_below="@id/linear_layout2"
         android:background="@color/row_bg"
         android:gravity="center"
@@ -98,6 +101,7 @@
     <LinearLayout
         android:layout_below="@id/linear_layout2"
         android:id="@+id/linear_layoutubooks"
+        android:layout_marginBottom="1dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/row_bg"
@@ -146,6 +150,7 @@
         android:id="@+id/linear_layoutrent"
         android:layout_below="@id/linear_layout2"
         android:layout_width="match_parent"
+        android:layout_marginBottom="1dp"
         android:layout_height="wrap_content"
         android:background="@color/row_bg"
         android:gravity="center"
