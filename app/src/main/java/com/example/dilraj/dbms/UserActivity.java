@@ -44,6 +44,9 @@ public class UserActivity extends AppCompatActivity {
                             newUserHandler.updateIssuedBooks(bookid);
                             books.remove(position);
                             bookAdapter.itemRemoved(books,position);
+                            rents.clear();
+                            rents=newUserHandler.getRentsOfUser(USERID);
+                            rentAdapter.itemAdded(rents,rents.size());
 
                         }
                     })
@@ -99,9 +102,7 @@ public class UserActivity extends AppCompatActivity {
         current.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rents.clear();
-                rents=newUserHandler.getRentsOfUser(USERID);
-                rentAdapter.itemAdded(rents,rents.size());
+
                 add_layout.setVisibility(View.GONE);
                 prev_layout.setVisibility(View.GONE);
                 curr_layout.setVisibility(View.VISIBLE);
