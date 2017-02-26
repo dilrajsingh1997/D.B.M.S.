@@ -3,7 +3,6 @@ package com.example.dilraj.dbms;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,9 +31,13 @@ public class Main5Activity extends AppCompatActivity {
     ArrayList<Books> books;
     ArrayList<USers> users;
     ArrayList<Rent> rents;
-    BookClickInterface clickInterface=new BookClickInterface() {
+    BookAdapter bookAdapter;
+    BookClickInterface bookClickInterface =new BookClickInterface() {
         @Override
         public void OnClick(int position) {
+            books.clear();
+            books = newUserHandler.getBooks();
+            bookAdapter.itemAdded(books,books.size());
 
         }
     };
@@ -75,13 +78,10 @@ public class Main5Activity extends AppCompatActivity {
         users = newUserHandler.getUsers();
         books = newUserHandler.getBooks();
         rents = newUserHandler.getRent();
-        users = newUserHandler.getUsers();
-        books = newUserHandler.getBooks();
-        rents = newUserHandler.getRent();
         LinearLayoutManager manager1 = new LinearLayoutManager(Main5Activity.this);
         LinearLayoutManager manager2 = new LinearLayoutManager(Main5Activity.this);
         LinearLayoutManager manager3 = new LinearLayoutManager(Main5Activity.this);
-        BookAdapter bookAdapter = new BookAdapter(Main5Activity.this, books,clickInterface,0);
+        bookAdapter = new BookAdapter(Main5Activity.this, books, bookClickInterface,0);
         UserAdapter userAdapter = new UserAdapter(Main5Activity.this, users,clickinterface);
         RentAdapter rentAdapter = new RentAdapter(Main5Activity.this, rents);
         user_recylcer.setAdapter(userAdapter);
@@ -166,6 +166,8 @@ public class Main5Activity extends AppCompatActivity {
                                     Book_row book_row= (Book_row) viewHolder;
                                     try {
                                         newUserHandler.delete_book(book_row.id.getText().toString());
+                                        books.remove(viewHolder.getAdapterPosition());
+                                        bookAdapter.bookRemoved(books,viewHolder.getAdapterPosition());
                                     } catch (Exception e){
                                         Toast.makeText(Main5Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
                                     }
@@ -245,7 +247,9 @@ public class Main5Activity extends AppCompatActivity {
         switch (id) {
             case R.id.admin_menu_addbook:
                 AddBookDialog dialog = new AddBookDialog();
+                dialog.setListener(bookClickInterface);
                 dialog.show(getSupportFragmentManager(), "ADD");
+
                 //handler.postDelayed(checkAct, 0);
                 return true;
 
@@ -253,5 +257,6 @@ public class Main5Activity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+    
 
 }

@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.dilraj.dbms.Books;
+import com.example.dilraj.dbms.Interface.BookClickInterface;
 import com.example.dilraj.dbms.NewUserHandler;
 import com.example.dilraj.dbms.R;
 
@@ -25,6 +26,7 @@ public class AddBookDialog extends DialogFragment {
     EditText id,name,author;
     Button addbook_button;
     NewUserHandler newUserHandler;
+    BookClickInterface clickInterface;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,5 +65,11 @@ public class AddBookDialog extends DialogFragment {
     @Override
     public void dismiss() {
         super.dismiss();
+        clickInterface.OnClick(0);
+
+    }
+
+    public void setListener(BookClickInterface bookClickInterface) {
+        clickInterface=bookClickInterface;
     }
 }

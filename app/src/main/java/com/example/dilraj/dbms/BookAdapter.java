@@ -49,4 +49,14 @@ public class BookAdapter extends RecyclerView.Adapter<Book_row> {
         this.books=books;
         notifyItemRemoved(position);
     }
+
+    public void itemAdded(ArrayList<Books> books, int size) {
+        this.books=books;
+        notifyItemInserted(size-1);
+    }
+
+    public void bookRemoved(ArrayList<Books> books, int adapterPosition) {
+        this.books=books;
+        notifyItemRemoved(adapterPosition);
+    }
 }
