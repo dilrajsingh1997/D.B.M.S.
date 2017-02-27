@@ -377,7 +377,7 @@ public class NewUserHandler extends SQLiteOpenHelper {
     public void delete_rent(String bookid) {
         try {
             SQLiteDatabase db = getWritableDatabase();
-            String q = "DELETE FROM " + TABLE_RENT + " WHERE " + COLUMN_BOOKID + "=" + bookid;
+            String q = "DELETE FROM " + TABLE_RENT + " WHERE " + COLUMN_BOOKID + "= \"" + bookid + "\"";
             db.execSQL(q);
             db.close();
         } catch (Exception e) {

@@ -15,5 +15,5 @@
     <string name="previous_issued">Previously Issued</string>
     <string name="current_issues">Currently Issued</string>
     <string name="rent_book">Rent Book</string>
-    <string name="date_format">yy-MM-dd HH:mm:ss</string>
+    <string name="date_format">yyyy-MM-dd HH:mm:ss</string>
 </resources>

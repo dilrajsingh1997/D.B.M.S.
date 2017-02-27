@@ -1,6 +1,8 @@
 package com.example.dilraj.dbms;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.icu.util.DateInterval;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,10 +16,14 @@ import android.widget.Toast;
 
 import com.example.dilraj.dbms.Interface.BookClickInterface;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import static android.R.attr.format;
 
 
 public class UserActivity extends AppCompatActivity {
@@ -131,18 +137,42 @@ public class UserActivity extends AppCompatActivity {
                                 String timeStamp = new SimpleDateFormat(getResources().getString(R.string.date_format), Locale.getDefault()).format(new Date());
                                 Rent rent=rents.get(viewHolder.getAdapterPosition());
                                 String bookid=rent.getBookid();
-                                newUserHandler.updateBooks(bookid);
-                                newUserHandler.delete_rent(bookid);
-                                newUserHandler.setHistoryReturnDate(rent.getDate(),timeStamp);
-                                history_rents.clear();
-                                history_rents=newUserHandler.getHistoryrent(USERID);
-                                historyAdapter.itemAdded(history_rents,history_rents.size());
-                                rents.remove(viewHolder.getAdapterPosition());
-                                rentAdapter.itemRemoved(rents,viewHolder.getAdapterPosition());
-                                books.clear();
-                                books = newUserHandler.getBooksUnIssued();
-                                bookAdapter.bookInserted(books);
+                                String due = rent.getDate().split(" ")[0];
+                                String today = timeStamp.split(" ")[0];
+                                int y1 = Integer.parseInt(due.split("-")[0]);
+                                int m1 = Integer.parseInt(due.split("-")[1]);
+                                int d1 = Integer.parseInt(due.split("-")[2]);
+                                int y2 = Integer.parseInt(today.split("-")[0]);
+                                int m2 = Integer.parseInt(today.split("-")[1]);
+                                int d2 = Integer.parseInt(today.split("-")[2]);
 
+                                Calendar c = Calendar.getInstance();
+                                c.set(Calendar.DAY_OF_MONTH, d1);
+                                c.set(Calendar.MONTH, m1);
+                                c.set(Calendar.YEAR, y1);
+                                Date fdate = c.getTime();
+
+                                c.set(Calendar.DAY_OF_MONTH, d2);
+                                c.set(Calendar.MONTH, m2);
+                                c.set(Calendar.YEAR, y2);
+                                Date ldate = c.getTime();
+                                long days = (ldate.getTime() - fdate.getTime())/1000/60/60/24;
+                                if(days>10){
+                                    Toast.makeText(UserActivity.this, "You have exceeded the 10-day limit. Your fine is " + String.valueOf((days-10)*5), Toast.LENGTH_SHORT).show();
+                                    //TODO restore adapter of recycler view
+                                }else{
+                                    newUserHandler.updateBooks(bookid);
+                                    newUserHandler.delete_rent(bookid);
+                                    newUserHandler.setHistoryReturnDate(rent.getDate(),timeStamp);
+                                    history_rents.clear();
+                                    history_rents=newUserHandler.getHistoryrent(USERID);
+                                    historyAdapter.itemAdded(history_rents,history_rents.size());
+                                    rents.remove(viewHolder.getAdapterPosition());
+                                    rentAdapter.itemRemoved(rents,viewHolder.getAdapterPosition());
+                                    books.clear();
+                                    books = newUserHandler.getBooksUnIssued();
+                                    bookAdapter.bookInserted(books);
+                                }
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
