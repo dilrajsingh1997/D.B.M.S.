@@ -169,7 +169,8 @@ public class Main5Activity extends AppCompatActivity {
                                         books.remove(viewHolder.getAdapterPosition());
                                         bookAdapter.bookRemoved(books,viewHolder.getAdapterPosition());
                                     } catch (Exception e){
-                                        Toast.makeText(Main5Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Main5Activity.this, "THE BOOK IS CURRENTLY ISSUED! CANNOT BE REMOVED!", Toast.LENGTH_SHORT).show();
+                                        bookAdapter.notifyDataSetChanged();
                                     }
                                     //handler.postDelayed(checkAct, 0);
                                 }

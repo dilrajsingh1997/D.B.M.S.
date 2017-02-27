@@ -1,8 +1,6 @@
 package com.example.dilraj.dbms;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.icu.util.DateInterval;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,14 +14,11 @@ import android.widget.Toast;
 
 import com.example.dilraj.dbms.Interface.BookClickInterface;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
-import static android.R.attr.format;
 
 
 public class UserActivity extends AppCompatActivity {
@@ -159,7 +154,7 @@ public class UserActivity extends AppCompatActivity {
                                 long days = (ldate.getTime() - fdate.getTime())/1000/60/60/24;
                                 if(days>10){
                                     Toast.makeText(UserActivity.this, "You have exceeded the 10-day limit. Your fine is " + String.valueOf((days-10)*5), Toast.LENGTH_SHORT).show();
-                                    //TODO restore adapter of recycler view
+                                    rentAdapter.notifyDataSetChanged();
                                 }else{
                                     newUserHandler.updateBooks(bookid);
                                     newUserHandler.delete_rent(bookid);
